@@ -1,4 +1,5 @@
 function Operate(){
+
     function add(a,b){
         return a + b;
     }
@@ -12,7 +13,7 @@ function Operate(){
     }
 
     function divide(a,b){
-        return a/b;
+        return b == 0 ? "Error" : a/b;
     }
 
     function negate(a){
@@ -23,10 +24,35 @@ function Operate(){
         return a/100;
     }
 
-    function handler(op, ...args){
-
+    opMap = {
+        '+': add,
+        '-': minus,
+        '*': multiply,
+        '/':divide,
+        'neg':negate,
+        'percent':percent
     }
+    
+
+    return function(op, ...args){
+        if(op in this.opMap){
+            return this.opMap[op](...args);
+        }
+    }
+
 }
+
+operate = Operate();
+
+testOperate = [
+    operate('+',1,2),
+    operate('-',1,2),
+    operate('*',3,2),
+    operate('/',4,3),
+    operate('/',1,0),
+    operate('neg',1),
+    operate('percent',2)
+]
 
 
 class IO{
@@ -46,5 +72,19 @@ class IO{
         return this.changeDisplay(this.display.innerText + text);
     }
 
+    static writeDisplay(text, overwrite){
+        return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
+    }
+
 }
 
+class Calculator{
+    constructor(IOInterface){
+        this.IO = IOInterface;
+        this.result = 0;
+        this.text = String(this.result);
+        this.overwrite = true;
+    }
+
+
+}
