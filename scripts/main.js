@@ -118,6 +118,10 @@ class IO{
         });
     }
 
+    setup(){
+        this.buttonSetup();
+    }
+
     // overwrites the current text completely with new text
     changeDisplay(text){   
         this.display.innerText = text;
@@ -142,7 +146,9 @@ class IO{
 // pass IO to controller, pass controller to calculator 
 class Calculator{
     constructor(operate){
-        //this.IO = IO(this);
+        this.io = new IO(this);
+        this.io.setup();
+
         this.result = 0;
         this.text = String(this.result);
         this.overwrite = true;
@@ -151,4 +157,4 @@ class Calculator{
 }
 
 calc = new Calculator(operate);
-io = new IO(calc);
+// io = new IO(calc);
