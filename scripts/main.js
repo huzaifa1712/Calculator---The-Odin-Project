@@ -56,10 +56,16 @@ testOperate = [
 
 
 class IO{
+    constructor(){
+        IO.buttonSetup();
+    }
+
     static display = document.getElementById("display");
 
     static buttonSetup(){
-        // add event listeners to buttons
+        // add event listeners  to buttons
+        console.log("hi buttons");
+
     }
 
     // overwrites the current text completely with new text
@@ -78,13 +84,15 @@ class IO{
 
 }
 
+io = new IO();
+
+// pass in IO object with certain methods and operate object with certain methods
 class Calculator{
-    constructor(IOInterface){
+    constructor(IOInterface, operate){
         this.IO = IOInterface;
         this.result = 0;
         this.text = String(this.result);
         this.overwrite = true;
+        this.operate = operate;
     }
-
-
 }
