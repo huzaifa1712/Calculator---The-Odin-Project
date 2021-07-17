@@ -9,7 +9,7 @@
 #calculator{
     width:600px;
     margin:0 auto;
-    margin-top:15vh;
+    margin-top:10vh;
     background-color:blanchedalmond;
     border: 2px solid blue;
     display:flex;
@@ -23,7 +23,7 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 2.5rem;
+    grid-column-gap: 2.1rem;
     grid-row-gap:2rem;
     padding:2rem;
     padding-top:0;
@@ -46,7 +46,7 @@
 #display{
     background-color: beige;
     text-align: right;
-    margin:2rem auto;
+    margin:2.2rem auto;
     font-size:4rem;
     padding: 0.8rem 0rem;
     padding-right:1rem;
