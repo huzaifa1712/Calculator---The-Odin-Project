@@ -35,8 +35,8 @@ function Operate(){
     
 
     return function(op, ...args){
-        if(op in this.opMap){
-            return this.opMap[op](...args);
+        if(op in opMap){
+            return opMap[op](...args);
         }
 
         else if(op === 'opMap'){
@@ -100,7 +100,6 @@ testOperate = [
 class IO{
     constructor(calculator){
         this.calculator = calculator;
-        console.log(this.calculator);
     }
 
     display = document.getElementById("display");
@@ -115,7 +114,8 @@ class IO{
             let target = evt.target; // the elem that was clicked
 
             if(target.hasAttribute(attrString)){
-                this.calculator.testMethod(target.getAttribute(attrString));
+                //this.calculator.testMethod(target.getAttribute(attrString));
+                this.calculator.inputHandler(target.getAttribute(attrString));
             }
             
         }.bind(this));
@@ -150,17 +150,27 @@ class IO{
 class Calculator{
     constructor(operate){
         this.io = new IO(this);
-        console.log(this.io.calculator);
         this.io.buttonSetup();
 
         this.result = 0;
         this.text = String(this.result);
         this.overwrite = true;
         this.operate = operate;
+
+        // arrays for Numbers, Special operations, and opMap operations
+        // to check the type of input received so can decide appropriate action
+        this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
+        this.special = ["float", "eval", "clear"];
+        this.opMap =  [...Object.keys(this.operate('opMap'))];
+        
     }
 
     testMethod(val){
         console.log("Called from IO : " + val);
+    }
+
+    inputHandler(inputString){
+        console.log(this.opMap);
     }
 }
 
