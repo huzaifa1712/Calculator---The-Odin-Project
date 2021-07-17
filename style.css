@@ -1,0 +1,29 @@
+#buttons{
+    border: 2px solid blue;
+    background-color:blanchedalmond;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    display:grid;
+    /* grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5,1fr); */
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    width:640px;
+    margin:0 auto;
+    margin-top: 40vh;
+    
+}
+
+.button{
+    border: 1px solid black;
+    flex-grow:1;
+    text-align: center;
+    margin: 0 1rem;
+
+}
+
+.row{
+    display:flex;
+    flex-direction: row;
+    flex-grow:1;
+}
