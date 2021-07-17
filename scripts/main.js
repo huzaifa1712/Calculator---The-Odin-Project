@@ -61,10 +61,20 @@ class IO{
     }
 
     static display = document.getElementById("display");
+    static buttonDiv = document.getElementById("buttons");
 
     static buttonSetup(){
-        // add event listeners  to buttons
-        console.log("hi buttons");
+        const attrString = "data-value";
+        // add event listener to buttons div, use bubbling to get the value
+        this.buttonDiv.addEventListener('click', function(evt){
+            let target = evt.target; // the elem that was clicked
+
+            if(target.hasAttribute(attrString)){
+                console.log(target);
+            }
+            
+        });
+        
 
     }
 
