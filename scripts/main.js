@@ -38,6 +38,10 @@ function Operate(){
         if(op in this.opMap){
             return this.opMap[op](...args);
         }
+
+        else if(op === 'opMap'){
+            return opMap;
+        }
     }
 
 }
@@ -74,8 +78,6 @@ class IO{
             }
             
         });
-        
-
     }
 
     // overwrites the current text completely with new text
@@ -97,6 +99,9 @@ class IO{
 io = new IO();
 
 // pass in IO object with certain methods and operate object with certain methods
+// calculator object takes in Controller instead
+// calc is the Model, Controller is interface between IO methods and model
+// pass IO to controller, pass controller to calculator 
 class Calculator{
     constructor(IOInterface, operate){
         this.IO = IOInterface;
