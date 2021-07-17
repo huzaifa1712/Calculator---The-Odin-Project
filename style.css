@@ -6,12 +6,12 @@
     --border-radius:1.3rem;
     --calc-bg: 	hsl(0, 0%, 32%);
     --button-bg:  hsl(36, 99%, 52%);
-    --button-bg-hover: hsl(36, 87%, 39%);
+    --button-bg-hover: hsl(36, 88%, 41%);
     --button-color:white;
 }
 
 #calculator{
-    width:600px;
+    width:550px;
     margin:0 auto;
     margin-top:10vh;
     background-color:var(--calc-bg);
@@ -29,7 +29,7 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 2rem;
+    grid-column-gap: 1.3rem;
     grid-row-gap:2rem;
     padding:2rem;
     padding-top:0;
@@ -64,6 +64,10 @@ button{
 
 button:hover{
     background-color: var(--button-bg-hover);
+}
+
+button:active{
+    background-color: rgba(255, 255, 255, 0.76);
 }
 
 .larger{
