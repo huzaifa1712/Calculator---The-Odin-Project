@@ -29,19 +29,22 @@ function Operate(){
 }
 
 
-class DOMHandler{
-    display = document.getElementById("display");
+class IO{
+    static display = document.getElementById("display");
+
+    static buttonSetup(){
+        // add event listeners to buttons
+    }
 
     // overwrites the current text completely with new text
-    changeDisplay(text){   
+    static changeDisplay(text){   
         this.display.innerText = text;
     }
 
-    // appends the text directly to the current contents
-    appendDisplay(text){
+    // appends the text directly to the current contents of display
+    static appendDisplay(text){
         return this.changeDisplay(this.display.innerText + text);
     }
 
 }
 
-const IO = new DOMHandler();
