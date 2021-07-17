@@ -100,6 +100,7 @@ testOperate = [
 class IO{
     constructor(calculator){
         this.calculator = calculator;
+        console.log(this.calculator);
     }
 
     display = document.getElementById("display");
@@ -108,14 +109,16 @@ class IO{
     buttonSetup(){
         const attrString = "data-value";
         // add event listener to buttons div, use bubbling to get the value
+        // if we use this inside evt function, this refers to elem that called. to get this as surrounding IO obj,
+        // use  fn.bind(this) where arg is the this context passed in. returns new function with that (this) context.
         this.buttonDiv.addEventListener('click', function(evt){
             let target = evt.target; // the elem that was clicked
 
             if(target.hasAttribute(attrString)){
-                console.log(target);
+                this.calculator.testMethod(target.getAttribute(attrString));
             }
             
-        });
+        }.bind(this));
     }
 
     setup(){
@@ -147,12 +150,17 @@ class IO{
 class Calculator{
     constructor(operate){
         this.io = new IO(this);
-        this.io.setup();
+        console.log(this.io.calculator);
+        this.io.buttonSetup();
 
         this.result = 0;
         this.text = String(this.result);
         this.overwrite = true;
         this.operate = operate;
+    }
+
+    testMethod(val){
+        console.log("Called from IO : " + val);
     }
 }
 
