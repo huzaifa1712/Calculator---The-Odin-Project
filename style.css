@@ -1,29 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+
 #buttons{
     border: 2px solid blue;
     background-color:blanchedalmond;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     display:grid;
-    /* grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5,1fr); */
-    display:flex;
-    flex-direction: column;
-    flex-wrap:wrap;
-    width:640px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 3rem;
+    grid-row-gap:2rem;
+  
+    width:600px;
     margin:0 auto;
-    margin-top: 40vh;
-    
+    margin-top: 30vh;
+
+    padding:2rem;
+
 }
 
-.button{
+button{
     border: 1px solid black;
-    flex-grow:1;
     text-align: center;
-    margin: 0 1rem;
-
+    padding:1rem 0;
+    font-size:1.3rem;
 }
 
 .row{
     display:flex;
-    flex-direction: row;
-    flex-grow:1;
 }
