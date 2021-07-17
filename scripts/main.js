@@ -27,3 +27,21 @@ function Operate(){
 
     }
 }
+
+
+class DOMHandler{
+    display = document.getElementById("display");
+
+    // overwrites the current text completely with new text
+    changeDisplay(text){   
+        this.display.innerText = text;
+    }
+
+    // appends the text directly to the current contents
+    appendDisplay(text){
+        return this.changeDisplay(this.display.innerText + text);
+    }
+
+}
+
+const IO = new DOMHandler();
