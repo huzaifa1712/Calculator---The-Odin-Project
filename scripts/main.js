@@ -146,6 +146,7 @@ class IO{
         return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
     }
 
+
     getButtons(){
         let attrString = this.attrString;
         return [...this.buttonDiv.querySelectorAll("button")].reduce(
@@ -156,6 +157,15 @@ class IO{
                 }
             }.bind(this),{}
         );
+    }
+
+    getButtonByValue(dataValue){
+        return this.buttons[dataValue];
+    }
+
+    toggleButtonByValue(dataValue){
+        const btn = this.getButtonByValue(dataValue);
+        btn.disabled = !btn.disabled;
     }
 
 }
@@ -181,7 +191,7 @@ class Calculator{
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
         this.special = ["float", "eval", "clear"];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
-        //console.log(this.io.buttons);
+        console.log(this.io.toggleButtonByValue("+"));
         
     }
 
@@ -198,12 +208,20 @@ class Calculator{
     }
 
     isOp(val){
-        console.log(this.opMap);
         return this.opMap.includes(val);
     }
 
     numberHandler(numberString){
         //this.io.writeDisplay( `number:${numberString}`,numberString);
+        if (this.overwrite){
+            this.io.writeDisplay(numberString, true);
+
+            this.overwrite = false;
+        }
+        
+        else{
+            this.io.writeDisplay(numberString, false);
+        }
     }
 
     specialHandler(specialString){
