@@ -13,7 +13,7 @@ function Operate(){
     }
 
     function divide(a,b){
-        return b == 0 ? "Error" : a/b;
+        return b == 0 ? "DivBy0" : a/b;
     }
 
     function negate(a){
@@ -28,6 +28,18 @@ function Operate(){
         return op.startsWith('unary');
     }
 
+    // input: array of args
+    // output: array of args converted to Number
+    function inputConverter(args){
+        return args.map((str) => Number(str));
+    }
+
+    // input: array of args
+    // output: true if all inputs are number
+    function inputValidation(args){
+        return !args.some(isNaN);
+    }
+
     opMap = {
         '+': add,
         '-': minus,
@@ -35,32 +47,41 @@ function Operate(){
         '/':divide,
         'unary-neg':negate,
         'unary-percent':percent,
-        'isUnary': isUnary
     }
 
     return function(op, ...args){
-        if(op in opMap){
-            return opMap[op](...args);
-        }
 
-        else if(op === 'opMap'){
+        if(op === 'opMap'){
             return opMap;
         }
+
+        if (op === 'isUnary'){
+            return isUnary(...args)
+        }
+
+        if(!inputValidation(args)){
+            throw "Error on input validation: " + args;
+        }
+        if(op in opMap){
+            return opMap[op](...inputConverter(args));
+        }
+
+        
     }
 
 }
 
 operate = Operate();
 
-testOperate = [
-    operate('+',1,2),
-    operate('-',1,2),
-    operate('*',3,2),
-    operate('/',4,3),
-    operate('/',1,0),
-    operate('unary-neg',1),
-    operate('unary-percent',2)
-]
+// testOperate = [
+//     operate('+',1,2),
+//     operate('-',1,2),
+//     operate('*',3,2),
+//     operate('/',4,3),
+//     operate('/',1,0),
+//     operate('unary-neg',1),
+//     operate('unary-percent',2)
+// ]
 
 
 // class IO{
@@ -235,8 +256,13 @@ class Calculator{
         //this.io.writeDisplay( `special:${specialString}`,specialString);
     }
 
+    // read current display input, apply unary operator to it, write back to display
+    // no storage of results or state needed
     unaryHandler(opString){
         console.log('unary handler: ' + opString);
+        const currentDisplay = this.io.displayInput();
+        const result = this.operate(opString, currentDisplay);
+        this.io.writeDisplay(result, true);
     }
 
     binaryHandler(opString){
