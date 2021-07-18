@@ -102,24 +102,27 @@ testOperate = [
 // }
 
 class IO{
-    constructor(calculator){
-        this.calculator = calculator;
-    }
-
     display = document.getElementById("display");
     buttonDiv = document.getElementById("buttons");
+    attrString = "data-value";
+
+    constructor(calculator){
+        this.calculator = calculator;
+        this.buttons = this.getButtons();
+    }
+
+    
 
     buttonSetup(){
-        const attrString = "data-value";
         // add event listener to buttons div, use bubbling to get the value
         // if we use this inside evt function, this refers to elem that called. to get this as surrounding IO obj,
         // use  fn.bind(this) where arg is the this context passed in. returns new function with that (this) context.
         this.buttonDiv.addEventListener('click', function(evt){
             let target = evt.target; // the elem that was clicked
 
-            if(target.hasAttribute(attrString)){
+            if(target.hasAttribute(this.attrString)){
                 //this.calculator.testMethod(target.getAttribute(attrString));
-                this.calculator.inputHandler(target.getAttribute(attrString));
+                this.calculator.inputHandler(target.getAttribute(this.attrString));
             }
             
         }.bind(this));
@@ -141,6 +144,18 @@ class IO{
 
     writeDisplay(text, overwrite){
         return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
+    }
+
+    getButtons(){
+        let attrString = this.attrString;
+        return [...this.buttonDiv.querySelectorAll("button")].reduce(
+            function(acc,curr){
+                if(curr.hasAttribute(this.attrString)){
+                    acc[curr.getAttribute(this.attrString)] = curr;
+                    return acc
+                }
+            }.bind(this),{}
+        );
     }
 
 }
@@ -166,6 +181,7 @@ class Calculator{
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
         this.special = ["float", "eval", "clear"];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
+        //console.log(this.io.buttons);
         
     }
 
@@ -187,15 +203,15 @@ class Calculator{
     }
 
     numberHandler(numberString){
-        this.io.writeDisplay( `number:${numberString}`,numberString);
+        //this.io.writeDisplay( `number:${numberString}`,numberString);
     }
 
     specialHandler(specialString){
-        this.io.writeDisplay( `special:${specialString}`,specialString);
+        //this.io.writeDisplay( `special:${specialString}`,specialString);
     }
 
     opHandler(opString){
-        this.io.writeDisplay( `op:${opString}`,opString);
+        //this.io.writeDisplay( `op:${opString}`,opString);
     }
 
     inputHandler(inputString){
