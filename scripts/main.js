@@ -235,9 +235,27 @@ class Calculator{
         //this.io.writeDisplay( `special:${specialString}`,specialString);
     }
 
+    unaryHandler(opString){
+        console.log('unary handler: ' + opString);
+    }
+
+    binaryHandler(opString){
+        console.log('binary handler: ' + opString);
+    }
+
     opHandler(opString){
-        console.log("Op: " + opString);
+        //console.log("Op: " + opString);
         //this.io.writeDisplay( `op:${opString}`,opString);
+
+        if(this.operate('isUnary', opString)){
+            this.unaryHandler(opString);
+            return;
+        }
+
+        else{
+            this.binaryHandler(opString);
+            return;
+        }
     }
 
     inputHandler(inputString){
