@@ -153,7 +153,7 @@ class IO{
     }
 
     // get the current value on the display
-    displayInput(){
+    getDisplayInput(){
         return this.display.innerText;
     }
 
@@ -179,7 +179,7 @@ class IO{
 
     // each call removes one num off the end of display, not delete entirely
     deleteDisplay(){
-        const curr = this.displayInput();
+        const curr = this.getDisplayInput();
 
         if(curr.length == 1){
             this.writeDisplay(0, true);
@@ -273,7 +273,7 @@ class Calculator{
         console.log("Number: " + numberString);
 
         // to prevent appending to display when current display is 0
-        if(this.io.displayInput() == "0"){
+        if(this.io.getDisplayInput() == "0"){
             this.overwrite = true;
         }
 
@@ -333,7 +333,7 @@ class Calculator{
     // no storage of results or state needed
     unaryHandler(opString){
         console.log("unary handler: " + opString);
-        const currentDisplay = this.io.displayInput();
+        const currentDisplay = this.io.getDisplayInput();
         const result = this.operate(opString, currentDisplay);
         this.io.writeDisplay(result, true);
     }
@@ -349,7 +349,7 @@ class Calculator{
         
         if(this.canEvaluate()){
             console.log("can eval");
-            const rightOperand = this.io.displayInput();
+            const rightOperand = this.io.getDisplayInput();
        
 
             const result = this.operate(this.currentOperator,this.leftOperand, rightOperand);
@@ -366,7 +366,7 @@ class Calculator{
 
         console.log("Left: " + this.leftOperand);
         console.log("op: " + this.currentOperator);
-        console.log("Right: " + this.io.displayInput());
+        console.log("Right: " + this.io.getDisplayInput());
     }
 
     binaryHandler(opString){
@@ -376,7 +376,7 @@ class Calculator{
 
         this.io.toggleButtonBackgroundByValue(opString, true);
         this.currentOperator = opString;
-        this.leftOperand = this.io.displayInput();
+        this.leftOperand = this.io.getDisplayInput();
         this.overwrite = true;
     }
 
