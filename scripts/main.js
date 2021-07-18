@@ -223,12 +223,13 @@ class IO{
 // pass IO to controller, pass controller to calculator 
 class Calculator{
     constructor(operate){
+        // constant references to helper objects 
         this.io = new IO(this);
         this.io.buttonSetup();
-
-        this.overwrite = true;
         this.operate = operate;
 
+        // state variables that change over time
+        this.overwrite = true;
         this.currentOperator = null;
         this.leftOperand = null;
 
@@ -264,6 +265,11 @@ class Calculator{
         if (this.overwrite){
             this.io.writeDisplay(numberString, true);
             this.overwrite = false;
+
+            // if there is an operator toggle off the bg color
+            if(this.currentOperator){
+                this.io.toggleButtonBackgroundByValue(this.currentOperator, false);
+            }
         }
         
         else{
@@ -322,21 +328,27 @@ class Calculator{
     // set overwrite to true, store result
     // reset variables for operator, left operand
     evaluate(){
+        
         if(this.canEvaluate()){
+            console.log("can eval");
             const rightOperand = this.io.displayInput();
-            // console.log("Left: " + this.leftOperand);
-            // console.log("op: " + this.currentOperator);
-            // console.log("Right: " + rightOperand);
+       
 
             const result = this.operate(this.currentOperator,this.leftOperand, rightOperand);
             this.io.writeDisplay(result, true);
             this.overwrite = true;
             this.io.toggleButtonBackgroundByValue(this.currentOperator, false);
 
+            // reset c
+            this.currentOperator = null;
+            this.leftOperand  = null;
 
-
-            // console.log(result);
+        
         }
+
+        console.log("Left: " + this.leftOperand);
+        console.log("op: " + this.currentOperator);
+        console.log("Right: " + this.io.displayInput());
     }
 
     binaryHandler(opString){
@@ -346,6 +358,7 @@ class Calculator{
         // if(this.canEvaluate()){
 
         // }
+        this.evaluate();
 
         this.io.toggleButtonBackgroundByValue(opString, true);
         this.currentOperator = opString;
