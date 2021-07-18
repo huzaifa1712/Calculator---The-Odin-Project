@@ -24,15 +24,19 @@ function Operate(){
         return a/100;
     }
 
+    function isUnary(op){
+        return op.startsWith('unary');
+    }
+
     opMap = {
         '+': add,
         '-': minus,
         '*': multiply,
         '/':divide,
-        'neg':negate,
-        'percent':percent
+        'unary-neg':negate,
+        'unary-percent':percent,
+        'isUnary': isUnary
     }
-    
 
     return function(op, ...args){
         if(op in opMap){
@@ -54,8 +58,8 @@ testOperate = [
     operate('*',3,2),
     operate('/',4,3),
     operate('/',1,0),
-    operate('neg',1),
-    operate('percent',2)
+    operate('unary-neg',1),
+    operate('unary-percent',2)
 ]
 
 
@@ -169,9 +173,46 @@ class Calculator{
         console.log("Called from IO : " + val);
     }
 
-    inputHandler(inputString){
-        console.log(this.opMap);
+    isNumber(val){
+        return this.numbers.includes(val);
     }
+
+    isSpecial(val){
+        return this.special.includes(val);
+    }
+
+    isOp(val){
+        console.log(this.opMap);
+        return this.opMap.includes(val);
+    }
+
+    numberHandler(numberString){
+        this.io.writeDisplay( `number:${numberString}`,numberString);
+    }
+
+    specialHandler(specialString){
+        this.io.writeDisplay( `special:${specialString}`,specialString);
+    }
+
+    opHandler(opString){
+        this.io.writeDisplay( `op:${opString}`,opString);
+    }
+
+    inputHandler(inputString){
+        if(this.isNumber(inputString)){
+            this.numberHandler(inputString);
+            return;
+        }
+
+        if(this.isSpecial(inputString)){
+            this.specialHandler(inputString);
+        }
+
+        if(this.isOp(inputString)){
+            this.opHandler(inputString);
+        }
+    }
+
 }
 
 calc = new Calculator(operate);
