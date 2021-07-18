@@ -195,9 +195,20 @@ class IO{
         btn.disabled = !btn.disabled;
     }
 
-    toggleButtonBackgroundByValue(dataValue){
+    // include additional var hasBackground: true if toggle bg color, false if don't toggle
+    // safety: always checks if need to toggle or not instead of just calling toggle blindly
+    toggleButtonBackgroundByValue(dataValue, hasBackground){
         const btn = this.getButtonByValue(dataValue);
-        btn.classList.toggle("button-hold");
+        const className = "button-hold";
+
+        if(hasBackground && !btn.classList.contains(className)){
+            btn.classList.add(className);
+        }
+
+        else if(!hasBackground && btn.classList.contains(className)){
+            btn.classList.remove(className);
+        }
+
         // btn.style.backgroundColor  = getComputedStyle(document.body).getPropertyValue("--button-bg-hover");
         
     }
@@ -263,7 +274,10 @@ class Calculator{
     // reset leftOperand, currentOperator, overwrite and display value
     clear(){
         this.leftOperand = null;
-        this.io.toggleButtonBackgroundByValue(this.currentOperator);
+
+        if(this.currentOperator != null){
+            this.io.toggleButtonBackgroundByValue(this.currentOperator, false);
+        }
         this.currentOperator = null;
         this.overwrite = true;
         this.io.writeDisplay(0, true);
@@ -317,7 +331,7 @@ class Calculator{
             const result = this.operate(this.currentOperator,this.leftOperand, rightOperand);
             this.io.writeDisplay(result, true);
             this.overwrite = true;
-            this.io.toggleButtonBackgroundByValue(this.currentOperator);
+            this.io.toggleButtonBackgroundByValue(this.currentOperator, false);
 
 
 
@@ -333,7 +347,7 @@ class Calculator{
 
         // }
 
-        this.io.toggleButtonBackgroundByValue(opString);
+        this.io.toggleButtonBackgroundByValue(opString, true);
         this.currentOperator = opString;
         this.leftOperand = this.io.displayInput();
         this.overwrite = true;
