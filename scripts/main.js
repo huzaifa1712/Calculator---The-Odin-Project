@@ -127,7 +127,7 @@ class IO{
     display = document.getElementById("display");
     buttonDiv = document.getElementById("buttons");
     attrString = "data-value";
-    MAX_LENGTH = 10;
+    MAX_LENGTH = 12;
 
     constructor(calculator){
         this.calculator = calculator;
@@ -159,8 +159,7 @@ class IO{
 
     // overwrites the current text completely with new text
     changeDisplay(text){   
-        if(text.length > 15){
-            console.log("fire");
+        if(text.length > this.MAX_LENGTH){
             text = text.slice(0,this.MAX_LENGTH);
         }
 
