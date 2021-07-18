@@ -194,6 +194,11 @@ class IO{
         btn.disabled = !btn.disabled;
     }
 
+    toggleButtonBackgroundByValue(dataValue){
+        const btn = this.getButtonByValue(dataValue);
+        btn.style.backgroundColor  = getComputedStyle(document.body).getPropertyValue("--button-bg-hover");
+    }
+
 }
 
 
@@ -211,6 +216,8 @@ class Calculator{
         this.text = String(this.result);
         this.overwrite = true;
         this.operate = operate;
+        this.currentOperator = null;
+        this.leftOperand = null;
 
         // arrays for Numbers, Special operations, and opMap operations
         // to check the type of input received so can decide appropriate action
@@ -259,11 +266,12 @@ class Calculator{
     // read current display input, apply unary operator to it, write back to display
     // no storage of results or state needed
     unaryHandler(opString){
-        console.log('unary handler: ' + opString);
+        console.log("unary handler: " + opString);
         const currentDisplay = this.io.displayInput();
         const result = this.operate(opString, currentDisplay);
         this.io.writeDisplay(result, true);
     }
+
 
     binaryHandler(opString){
         console.log('binary handler: ' + opString);
@@ -272,7 +280,6 @@ class Calculator{
     opHandler(opString){
         //console.log("Op: " + opString);
         //this.io.writeDisplay( `op:${opString}`,opString);
-
         if(this.operate('isUnary', opString)){
             this.unaryHandler(opString);
             return;
