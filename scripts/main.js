@@ -260,14 +260,35 @@ class Calculator{
         }
     }
 
+    // reset leftOperand, currentOperator, overwrite and display value
+    clear(){
+        this.leftOperand = null;
+        this.io.toggleButtonBackgroundByValue(this.currentOperator);
+        this.currentOperator = null;
+        this.overwrite = true;
+        this.io.writeDisplay(0, true);
+    }
+
     specialHandler(specialString){
         console.log("Special: " + specialString);
         //this.io.writeDisplay( `special:${specialString}`,specialString);
 
-        if(specialString == "eval"){
-            this.evaluate();
-            return;
+        switch(specialString){
+            case "eval":
+                this.evaluate();
+                break;
+
+            case "clear":
+                this.clear();
+                break;
         }
+
+        // if(specialString == "eval"){
+        //     this.evaluate();
+        //     return;
+        // }
+
+        // if(speci)
     }
 
     // read current display input, apply unary operator to it, write back to display
