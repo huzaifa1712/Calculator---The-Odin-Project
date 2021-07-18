@@ -127,13 +127,12 @@ class IO{
     display = document.getElementById("display");
     buttonDiv = document.getElementById("buttons");
     attrString = "data-value";
+    MAX_LENGTH = 10;
 
     constructor(calculator){
         this.calculator = calculator;
         this.buttons = this.getButtons();
     }
-
-    
 
     buttonSetup(){
         // add event listener to buttons div, use bubbling to get the value
@@ -143,7 +142,6 @@ class IO{
             let target = evt.target; // the elem that was clicked
 
             if(target.hasAttribute(this.attrString)){
-                //this.calculator.testMethod(target.getAttribute(attrString));
                 this.calculator.inputHandler(target.getAttribute(this.attrString));
             }
             
@@ -161,6 +159,11 @@ class IO{
 
     // overwrites the current text completely with new text
     changeDisplay(text){   
+        if(text.length > 15){
+            console.log("fire");
+            text = text.slice(0,this.MAX_LENGTH);
+        }
+
         this.display.innerText = text;
     }
 
@@ -170,6 +173,8 @@ class IO{
     }
 
     writeDisplay(text, overwrite){
+        text = String(text);
+        
         return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
     }
 
@@ -232,7 +237,6 @@ class Calculator{
         this.overwrite = true;
         this.currentOperator = null;
         this.leftOperand = null;
-
         // arrays for Numbers, Special operations, and opMap operations
         // to check the type of input received so can decide appropriate action
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
@@ -291,8 +295,6 @@ class Calculator{
 
     specialHandler(specialString){
         console.log("Special: " + specialString);
-        //this.io.writeDisplay( `special:${specialString}`,specialString);
-
         switch(specialString){
             case "eval":
                 this.evaluate();
@@ -303,12 +305,6 @@ class Calculator{
                 break;
         }
 
-        // if(specialString == "eval"){
-        //     this.evaluate();
-        //     return;
-        // }
-
-        // if(speci)
     }
 
     // read current display input, apply unary operator to it, write back to display
@@ -353,11 +349,7 @@ class Calculator{
 
     binaryHandler(opString){
         console.log('binary handler: ' + opString);
-
-        // if currently can eval expression, evaluate first
-        // if(this.canEvaluate()){
-
-        // }
+    
         this.evaluate();
 
         this.io.toggleButtonBackgroundByValue(opString, true);
