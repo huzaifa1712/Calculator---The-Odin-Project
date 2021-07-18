@@ -132,6 +132,11 @@ class IO{
         this.buttonSetup();
     }
 
+    // get the current value on the display
+    displayInput(){
+        return this.display.innerText;
+    }
+
     // overwrites the current text completely with new text
     changeDisplay(text){   
         this.display.innerText = text;
@@ -209,10 +214,14 @@ class Calculator{
 
     numberHandler(numberString){
         console.log("Number: " + numberString);
+        
+        // do nothing so that next input overwrites
+        if(numberString == "0" && this.io.displayInput() == "0"){
+            return;
+        }
         //this.io.writeDisplay( `number:${numberString}`,numberString);
         if (this.overwrite){
             this.io.writeDisplay(numberString, true);
-
             this.overwrite = false;
         }
         
