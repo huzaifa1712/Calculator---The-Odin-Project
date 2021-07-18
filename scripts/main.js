@@ -191,13 +191,9 @@ class Calculator{
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
         this.special = ["float", "eval", "clear"];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
-        console.log(this.io.toggleButtonByValue("+"));
         
     }
 
-    testMethod(val){
-        console.log("Called from IO : " + val);
-    }
 
     isNumber(val){
         return this.numbers.includes(val);
@@ -212,6 +208,7 @@ class Calculator{
     }
 
     numberHandler(numberString){
+        console.log("Number: " + numberString);
         //this.io.writeDisplay( `number:${numberString}`,numberString);
         if (this.overwrite){
             this.io.writeDisplay(numberString, true);
@@ -225,10 +222,12 @@ class Calculator{
     }
 
     specialHandler(specialString){
+        console.log("Special: " + specialString);
         //this.io.writeDisplay( `special:${specialString}`,specialString);
     }
 
     opHandler(opString){
+        console.log("Op: " + opString);
         //this.io.writeDisplay( `op:${opString}`,opString);
     }
 
