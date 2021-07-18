@@ -66,10 +66,7 @@ function Operate(){
         if(op in opMap){
             return opMap[op](...inputConverter(args));
         }
-
-        
     }
-
 }
 
 operate = Operate();
@@ -83,45 +80,6 @@ testOperate = [
     operate('unary-neg',1),
     operate('unary-percent',2)
 ]
-
-
-// class IO{
-//     constructor(calculator){
-//         this.calculator = calculator;
-//         IO.buttonSetup();
-//     }
-
-//     static display = document.getElementById("display");
-//     static buttonDiv = document.getElementById("buttons");
-
-//     static buttonSetup(){
-//         const attrString = "data-value";
-//         // add event listener to buttons div, use bubbling to get the value
-//         this.buttonDiv.addEventListener('click', function(evt){
-//             let target = evt.target; // the elem that was clicked
-
-//             if(target.hasAttribute(attrString)){
-//                 console.log(target);
-//             }
-            
-//         });
-//     }
-
-//     // overwrites the current text completely with new text
-//     static changeDisplay(text){   
-//         this.display.innerText = text;
-//     }
-
-//     // appends the text directly to the current contents of display
-//     static appendDisplay(text){
-//         return this.changeDisplay(this.display.innerText + text);
-//     }
-
-//     static writeDisplay(text, overwrite){
-//         return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
-//     }
-
-// }
 
 class IO{
     display = document.getElementById("display");
@@ -310,7 +268,11 @@ class Calculator{
         this.io.deleteDisplay();
         return;
     }
-
+    
+    float(){
+        console.log("float handler");
+    }
+    
     specialHandler(specialString){
         console.log("Special: " + specialString);
         switch(specialString){
@@ -325,6 +287,9 @@ class Calculator{
             case "del":
                 this.delete();
                 break;
+            case "float":
+                this.float();
+                break;      
         }
 
     }
