@@ -1,5 +1,5 @@
 function Operate(){
-
+    const divBy0Msg = "DivBy0"
     function add(a,b){
         return a + b;
     }
@@ -13,7 +13,7 @@ function Operate(){
     }
 
     function divide(a,b){
-        return b == 0 ? "DivBy0" : a/b;
+        return b == 0 ? divBy0Msg : a/b;
     }
 
     function negate(a){
@@ -31,13 +31,13 @@ function Operate(){
     // input: array of args
     // output: array of args converted to Number
     function inputConverter(args){
-        return args.map((str) => Number(str));
+        return args.map((str) => str == divBy0Msg ? 0 : Number(str));
     }
 
     // input: array of args
     // output: true if all inputs are number
     function inputValidation(args){
-        return !args.some(isNaN);
+        return !args.some((arg) => arg == divBy0Msg ? false : isNaN(arg));
     }
 
     opMap = {
