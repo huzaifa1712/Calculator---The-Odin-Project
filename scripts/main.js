@@ -50,7 +50,8 @@ function Operate(){
     }
 
     return function(op, ...args){
-
+        // console.log("from operate");
+        // console.log(op, args);
         if(op === 'opMap'){
             return opMap;
         }
@@ -73,15 +74,15 @@ function Operate(){
 
 operate = Operate();
 
-// testOperate = [
-//     operate('+',1,2),
-//     operate('-',1,2),
-//     operate('*',3,2),
-//     operate('/',4,3),
-//     operate('/',1,0),
-//     operate('unary-neg',1),
-//     operate('unary-percent',2)
-// ]
+testOperate = [
+    operate('+',1,2),
+    operate('-',1,2),
+    operate('*',3,2),
+    operate('/',4,3),
+    operate('/',1,0),
+    operate('unary-neg',1),
+    operate('unary-percent',2)
+]
 
 
 // class IO{
@@ -196,7 +197,9 @@ class IO{
 
     toggleButtonBackgroundByValue(dataValue){
         const btn = this.getButtonByValue(dataValue);
-        btn.style.backgroundColor  = getComputedStyle(document.body).getPropertyValue("--button-bg-hover");
+        btn.classList.toggle("button-hold");
+        // btn.style.backgroundColor  = getComputedStyle(document.body).getPropertyValue("--button-bg-hover");
+        
     }
 
 }
@@ -212,10 +215,9 @@ class Calculator{
         this.io = new IO(this);
         this.io.buttonSetup();
 
-        this.result = 0;
-        this.text = String(this.result);
         this.overwrite = true;
         this.operate = operate;
+
         this.currentOperator = null;
         this.leftOperand = null;
 
@@ -261,6 +263,11 @@ class Calculator{
     specialHandler(specialString){
         console.log("Special: " + specialString);
         //this.io.writeDisplay( `special:${specialString}`,specialString);
+
+        if(specialString == "eval"){
+            this.evaluate();
+            return;
+        }
     }
 
     // read current display input, apply unary operator to it, write back to display
@@ -272,9 +279,43 @@ class Calculator{
         this.io.writeDisplay(result, true);
     }
 
+    canEvaluate(){
+        return this.currentOperator !== null && this.leftOperand !== null;
+    }
+
+    // calculate value if there is currently expr to be evaluated,then write to display
+    // set overwrite to true, store result
+    // reset variables for operator, left operand
+    evaluate(){
+        if(this.canEvaluate()){
+            const rightOperand = this.io.displayInput();
+            // console.log("Left: " + this.leftOperand);
+            // console.log("op: " + this.currentOperator);
+            // console.log("Right: " + rightOperand);
+
+            const result = this.operate(this.currentOperator,this.leftOperand, rightOperand);
+            this.io.writeDisplay(result, true);
+            this.overwrite = true;
+            this.io.toggleButtonBackgroundByValue(this.currentOperator);
+
+
+
+            // console.log(result);
+        }
+    }
 
     binaryHandler(opString){
         console.log('binary handler: ' + opString);
+
+        // if currently can eval expression, evaluate first
+        // if(this.canEvaluate()){
+
+        // }
+
+        this.io.toggleButtonBackgroundByValue(opString);
+        this.currentOperator = opString;
+        this.leftOperand = this.io.displayInput();
+        this.overwrite = true;
     }
 
     opHandler(opString){
