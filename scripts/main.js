@@ -177,6 +177,18 @@ class IO{
         return overwrite ?  this.changeDisplay(text) : this.appendDisplay(text);
     }
 
+    // each call removes one num off the end of display, not delete entirely
+    deleteDisplay(){
+        const curr = this.displayInput();
+
+        if(curr.length == 1){
+            this.writeDisplay(0, true);
+        }
+
+        else{
+            this.writeDisplay(curr.slice(0,-1), true);
+        }
+    }
 
     getButtons(){
         let attrString = this.attrString;
@@ -239,7 +251,7 @@ class Calculator{
         // arrays for Numbers, Special operations, and opMap operations
         // to check the type of input received so can decide appropriate action
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
-        this.special = ["float", "eval", "clear"];
+        this.special = ["float", "eval", "clear", "del"];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
         
     }
@@ -259,12 +271,12 @@ class Calculator{
 
     numberHandler(numberString){
         console.log("Number: " + numberString);
-        
-        // do nothing so that next input overwrites
-        if(numberString == "0" && this.io.displayInput() == "0"){
-            return;
+
+        // to prevent appending to display when current display is 0
+        if(this.io.displayInput() == "0"){
+            this.overwrite = true;
         }
-        //this.io.writeDisplay( `number:${numberString}`,numberString);
+
         if (this.overwrite){
             this.io.writeDisplay(numberString, true);
             this.overwrite = false;
@@ -292,6 +304,13 @@ class Calculator{
         this.io.writeDisplay(0, true);
     }
 
+    // back space/delete - each press removes one number off the end of the string
+    delete(){
+        console.log("delete within calc");
+        this.io.deleteDisplay();
+        return;
+    }
+
     specialHandler(specialString){
         console.log("Special: " + specialString);
         switch(specialString){
@@ -301,6 +320,10 @@ class Calculator{
 
             case "clear":
                 this.clear();
+                break;
+
+            case "del":
+                this.delete();
                 break;
         }
 
