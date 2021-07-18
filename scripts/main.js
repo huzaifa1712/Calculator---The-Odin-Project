@@ -50,8 +50,6 @@ function Operate(){
     }
 
     return function(op, ...args){
-        // console.log("from operate");
-        // console.log(op, args);
         if(op === 'opMap'){
             return opMap;
         }
@@ -192,9 +190,7 @@ class IO{
 
 
 // pass in IO object with certain methods and operate object with certain methods
-// calculator object takes in Controller instead
-// calc is the Model, Controller is interface between IO methods and model
-// pass IO to controller, pass controller to calculator 
+
 class Calculator{
     constructor(operate){
         // constant references to helper objects 
@@ -272,7 +268,7 @@ class Calculator{
     float(){
         console.log("float handler");
     }
-    
+
     specialHandler(specialString){
         console.log("Special: " + specialString);
         switch(specialString){
@@ -346,8 +342,6 @@ class Calculator{
     }
 
     opHandler(opString){
-        //console.log("Op: " + opString);
-        //this.io.writeDisplay( `op:${opString}`,opString);
         if(this.operate('isUnary', opString)){
             this.unaryHandler(opString);
             return;
@@ -377,4 +371,3 @@ class Calculator{
 }
 
 calc = new Calculator(operate);
-// io = new IO(calc);
