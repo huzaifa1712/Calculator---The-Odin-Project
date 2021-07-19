@@ -12,16 +12,34 @@
     --operator--hover-color: 	hsl(0, 0%, 60%);
 }
 
+#desc-title, #desc-subtitle{
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#desc-title{
+    font-size: 2.2rem;;
+    margin-bottom:0.3rem;
+    font-weight: 400;
+}
+
+#desc-subtitle{
+    font-size:1.2em;
+    margin:0;
+    font-weight:300;
+}
+
 #calculator{
     width:500px;
     margin:0 auto;
-    margin-top:10vh;
+    margin-top:3vh;
     background-color:var(--calc-bg);
     display:flex;
     flex-wrap:wrap;
     flex-direction: column;
     align-items: stretch;
-    box-shadow: 0px 0px 12px 4px rgba(89,77,91,0.39);
+    box-shadow: 0px 0px 12px 4px rgba(89,77,91,0.49);
     border-radius: 1.1rem;
     font-family: 'Roboto Mono', monospace;
 
