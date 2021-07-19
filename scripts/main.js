@@ -96,6 +96,8 @@ class IO{
         // use  fn.bind(this) where arg is the this context passed in. returns new function with that (this) context.
         this.buttonDiv.addEventListener('click', function(evt){
             let target = evt.target; // the elem that was clicked
+            
+            console.log(target);
 
             if(target.hasAttribute(this.attrString)){
                 this.calculator.inputHandler(target.getAttribute(this.attrString));
@@ -265,8 +267,26 @@ class Calculator{
         return;
     }
     
+    // put a . after current display input
+    // only do if there isn't a . already there
     float(){
         console.log("float handler");
+
+        const curr = this.io.getDisplayInput();
+        const placeString = ".";
+
+        if(!curr.includes(placeString)){
+            this.io.writeDisplay(placeString, false);
+
+            if(this.overwrite == true){
+                this.overwrite = false;
+            }
+        }
+
+        else if (this.overwrite ==  true){
+            this.io.writeDisplay("0" + placeString, true);
+            this.overwrite = false;
+        }
     }
 
     specialHandler(specialString){
