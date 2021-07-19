@@ -31,10 +31,11 @@
 }
 
 #calculator{
-    width:500px;
+    width:480px;
     margin:0 auto;
     margin-top:3vh;
     background-color:var(--calc-bg);
+    border: 1.5px solid rgb(54, 52, 52);
     display:flex;
     flex-wrap:wrap;
     flex-direction: column;
@@ -49,7 +50,7 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 1.5rem;
+    grid-column-gap: 1.2rem;
     grid-row-gap:2rem;
     padding:2.3rem;
     padding-top:0.5rem;
