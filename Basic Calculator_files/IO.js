@@ -141,7 +141,7 @@ class IO{
     // safety: always checks if need to toggle or not instead of just calling toggle blindly
     toggleButtonBackgroundByValue(dataValue, hasBackground){
         const btn = this.getButtonByValue(dataValue);
-        const className = btn.classList.contains("operator") ? "operator-button-hold" : "button-hold";
+        const className = "button-hold";
 
         if(hasBackground && !btn.classList.contains(className)){
             btn.classList.add(className);

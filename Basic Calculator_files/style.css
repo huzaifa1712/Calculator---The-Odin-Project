@@ -4,12 +4,12 @@
 
 :root{
     --border-radius:1.3rem;
-    --calc-bg: 	hsl(0, 3.3%, 36.1%);
+    --calc-bg: 	hsl(0, 0%, 32%);
     --button-bg:  hsl(36, 99%, 52%);
     --button-bg-hover: hsl(36, 88%, 41%);
     --button-color:white;
-    --operator-color:  	hsl(0, 0%, 78%);
-    --operator--hover-color: 	hsl(0, 0%, 60%);
+    --operator-color:  	hsl(0, 0%, 72%);
+    --operator--hover-color: 	hsl(0, 0%, 72%);
 }
 
 #calculator{
@@ -69,11 +69,7 @@ button{
 }
 
 .operator:hover{
-    background-color:var(--operator--hover-color);
-}
-
-.operator:active{
-    background-color:var(--operator--hover-color);
+    background-color: var(--operator--hover-color);
 }
 
 button:hover{
@@ -86,10 +82,6 @@ button:active{
 
 .button-hold{
     background-color: var(--button-bg-hover);
-}
-
-.operator-button-hold{
-    background-color: var(--operator--hover-color);
 }
 
 .larger{
