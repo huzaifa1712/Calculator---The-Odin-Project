@@ -147,12 +147,11 @@ class IO{
 
     keyboardSetup(){
         document.addEventListener("keydown", function(evt){
-            const char = evt.code;  // string
-            const shiftKey = evt.shiftKey;
-            console.log(char);
-            console.log(shiftKey); // bool
-            console.log("converted: " + this.keyboardInputConverter(char, shiftKey));
+            const input = this.keyboardInputConverter(evt.code, evt.shiftKey);
+            
+            console.log("converted in keyb: " + input);
 
+            this.calculator.inputHandler(input);
             // const char = String.fromCharCode(Number(evt.keyCode));
             // this.calculator.inputHandler(char);
         }.bind(this));
@@ -246,7 +245,6 @@ class IO{
 
 
 // pass in IO object with certain methods and operate object with certain methods
-
 class Calculator{
     constructor(operate){
         // constant references to helper objects 
@@ -260,7 +258,7 @@ class Calculator{
         // arrays for Numbers, Special operations, and opMap operations
         // to check the type of input received so can decide appropriate action
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
-        this.special = ["float", "eval", "clear", "del", "="];
+        this.special = ["float", "eval", "clear", "del"];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
         
     }
@@ -271,11 +269,6 @@ class Calculator{
     }
 
     isSpecial(val){
-        function specialConverter(val){
-            const map = {
-                "=":"eval",
-            }
-        }
         return this.special.includes(val);
     }
 
@@ -351,7 +344,6 @@ class Calculator{
         console.log("Special: " + specialString);
         switch(specialString){
             case "eval":
-            case "=":
                 this.evaluate();
                 break;
 
@@ -432,7 +424,30 @@ class Calculator{
         }
     }
 
+    // helper to convert input to a form Calculator understands
+    convertInput(inputString){  
+        if(!inputString){return;}
+
+        const map = {
+            ".":"float",
+            "=":"eval",
+            "%":"unary-percent",
+            "Escape":"clear",
+            "Backspace":"del",
+        }
+
+        if(inputString in map){
+            return map[inputString];
+        }
+
+        return inputString;
+    }
+
     inputHandler(inputString){
+
+        inputString = this.convertInput(inputString);
+        console.log("Input conversion in calc: " + inputString);
+        
         if(this.isNumber(inputString)){
             this.numberHandler(inputString);
             return;
