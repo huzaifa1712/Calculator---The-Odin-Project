@@ -88,6 +88,7 @@ class IO{
     constructor(calculator){
         this.calculator = calculator;
         this.buttons = this.getButtons();
+        this.setup();
     }
 
     buttonSetup(){
@@ -106,8 +107,61 @@ class IO{
         }.bind(this));
     }
 
+    // to convert input into a format Calculator recognises
+    // String code, Bool shiftKey
+    keyboardInputConverter(code, shiftKey){
+        // shift + Equal = "+"
+        // shift + 8 = "*"
+        // shift + 5 = "%"
+        code = code.startsWith("Digit") ? code[code.length-1] : code;
+        if(shiftKey){
+            switch(code){
+                case "Equal":
+                    return "+";
+                case "8":
+                    return "*";
+                case "5":
+                    return "%";
+            }
+        }
+
+        else{
+            if(!isNaN(code)){
+                return code;
+            }
+
+            switch(code){
+                case "Slash":
+                    return "/";
+                case "Minus":
+                    return "-";
+                case "Period":
+                    return ".";
+                case "Equal":
+                    return "=";
+            }
+        }
+
+        return code;
+    }
+
+    keyboardSetup(){
+        document.addEventListener("keydown", function(evt){
+            const char = evt.code;  // string
+            const shiftKey = evt.shiftKey;
+            console.log(char);
+            console.log(shiftKey); // bool
+            console.log("converted: " + this.keyboardInputConverter(char, shiftKey));
+
+            // const char = String.fromCharCode(Number(evt.keyCode));
+            // this.calculator.inputHandler(char);
+        }.bind(this));
+    }
+
+
     setup(){
         this.buttonSetup();
+        this.keyboardSetup();
     }
 
     // get the current value on the display
@@ -197,7 +251,6 @@ class Calculator{
     constructor(operate){
         // constant references to helper objects 
         this.io = new IO(this);
-        this.io.buttonSetup();
         this.operate = operate;
 
         // state variables that change over time
@@ -207,7 +260,7 @@ class Calculator{
         // arrays for Numbers, Special operations, and opMap operations
         // to check the type of input received so can decide appropriate action
         this.numbers = ["0","1","2","3","4","5","6","7","8","9"];
-        this.special = ["float", "eval", "clear", "del"];
+        this.special = ["float", "eval", "clear", "del", "="];
         this.opMap =  [...Object.keys(this.operate('opMap'))];
         
     }
@@ -218,6 +271,11 @@ class Calculator{
     }
 
     isSpecial(val){
+        function specialConverter(val){
+            const map = {
+                "=":"eval",
+            }
+        }
         return this.special.includes(val);
     }
 
@@ -293,6 +351,7 @@ class Calculator{
         console.log("Special: " + specialString);
         switch(specialString){
             case "eval":
+            case "=":
                 this.evaluate();
                 break;
 
@@ -381,10 +440,12 @@ class Calculator{
 
         if(this.isSpecial(inputString)){
             this.specialHandler(inputString);
+            return;
         }
 
         if(this.isOp(inputString)){
             this.opHandler(inputString);
+            return;
         }
     }
 
