@@ -52,7 +52,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 1.2rem;
     grid-row-gap:2rem;
-    padding:2.3rem;
+    padding:2rem;
     padding-top:0.5rem;
     border-radius: var(--border-radius);
 
